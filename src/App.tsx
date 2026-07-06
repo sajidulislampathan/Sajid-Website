@@ -41,6 +41,15 @@ const services = [
   }
 ];
 
+const brands = [
+  { name: "bKash", logoUrl: "https://i.postimg.cc/63qzvgpR/bkash.png" }, // You can paste image URLs here (e.g., https://i.postimg.cc/...)
+  { name: "Duolingo", logoUrl: "https://i.postimg.cc/BQ4p5j6Y/Duolingo.png" },
+  { name: "TapTap Send", logoUrl: "https://i.postimg.cc/FszdQvnr/Tap-Tap-Send.png" },
+  { name: "Likee", logoUrl: "https://i.postimg.cc/dVqqKj08/Likee.png" },
+  { name: "Ghorer Bazar", logoUrl: "https://i.postimg.cc/NjgXFnDs/ghorerbazar.png" },
+  { name: "Grammarly", logoUrl: "https://i.postimg.cc/mD2RFQqV/Grammarly.png" },
+];
+
 export default function App() {
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -60,7 +69,16 @@ export default function App() {
             SAJID<span className="text-brand">.ASIA</span>
           </div>
           <div className="hidden space-x-8 text-sm font-medium uppercase tracking-widest md:flex">
-            <a href="#about" className="transition-colors hover:text-brand">About</a>
+            <a 
+              href="#about" 
+              onClick={(e) => {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+              className="transition-colors hover:text-brand"
+            >
+              About
+            </a>
             <a href="#stats" className="transition-colors hover:text-brand">Impact</a>
             <a href="#services" className="transition-colors hover:text-brand">Services</a>
             <a href="#contact" className="transition-colors hover:text-brand">Contact</a>
@@ -87,7 +105,7 @@ export default function App() {
               transition={{ duration: 0.6 }}
               className="mb-4 inline-block rounded-full border border-brand/30 bg-brand/10 px-4 py-1 text-xs font-bold tracking-widest text-brand uppercase"
             >
-              Social Media Manager & Influencer Marketer
+              Social Media Expert & Influencer Marketer
             </motion.div>
             <motion.h1 
               initial={{ opacity: 0, y: 20 }}
@@ -107,36 +125,31 @@ export default function App() {
               Managing 30+ content creators and YouTube channels with a combined audience of 80 million. 
               Bridging the gap between brands and creators through strategic sponsorships and growth.
             </motion.p>
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="mt-10 flex flex-wrap justify-center gap-4 md:justify-start"
-            >
-              <button className="flex items-center gap-2 rounded-full bg-white px-8 py-4 font-bold text-surface transition-all hover:bg-brand hover:text-surface">
-                View My Work <ArrowRight size={20} />
-              </button>
-              <button className="flex items-center gap-2 rounded-full border border-white/20 px-8 py-4 font-bold transition-all hover:bg-white/10">
-                Contact Me
-              </button>
-            </motion.div>
+
           </div>
 
           <motion.div 
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8 }}
-            className="relative mx-auto max-w-md md:max-w-full"
+            className="relative mx-auto flex flex-col items-center w-full"
           >
-            <div className="absolute -inset-4 rounded-full bg-brand/20 blur-3xl" />
-            <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-white/10 bg-surface-muted shadow-2xl">
+            <div className="absolute -inset-4 rounded-full bg-brand/20 blur-3xl opacity-60" />
+            
+            {/* Framed Picture Container */}
+            <div 
+              className="relative overflow-hidden w-full max-w-[420px] h-[560px] rounded-[32px] border border-white/10 bg-surface-muted shadow-2xl transition-all duration-500 ease-out hover:border-brand/30 hover:shadow-brand/5 group"
+            >
               <img 
-                src="/profile.jpg" 
+                src="https://i.postimg.cc/YqR1HGFd/j.jpg" 
                 alt="MD SAJIDUL ISLAM PATHAN"
-                className="h-full w-full object-cover transition-all duration-700 hover:scale-105"
+                className="h-full w-full object-cover transition-all duration-700 ease-out group-hover:scale-105"
                 referrerPolicy="no-referrer"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = "/profile.jpg";
+                }}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent opacity-60" />
+              <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent opacity-50" />
             </div>
           </motion.div>
         </motion.div>
@@ -197,16 +210,50 @@ export default function App() {
       </section>
 
       {/* Brands Section */}
-      <section className="border-y border-white/5 py-24">
-        <div className="container mx-auto px-6">
-          <div className="mb-12 text-center">
-            <span className="text-xs font-bold tracking-[0.3em] text-white/30 uppercase">Trusted by 35+ Global Brands</span>
-          </div>
-          <div className="flex flex-wrap items-center justify-center gap-12 opacity-30 grayscale transition-all hover:opacity-100 hover:grayscale-0">
-            {/* Placeholder Brand Logos */}
-            {['Brand A', 'Brand B', 'Brand C', 'Brand D', 'Brand E'].map((brand) => (
-              <div key={brand} className="text-2xl font-black tracking-tighter">{brand}</div>
-            ))}
+      <section className="border-y border-white/5 py-16 overflow-hidden">
+        <div className="container mx-auto px-6 mb-10 text-center">
+          <span className="text-xs font-bold tracking-[0.3em] text-white/30 uppercase">Trusted by 35+ Global Brands</span>
+        </div>
+        
+        {/* Infinite Scrolling Marquee Container */}
+        <div className="relative w-full overflow-hidden py-4">
+          {/* Gradient Masks for Seamless Edge Fading */}
+          <div className="pointer-events-none absolute left-0 top-0 bottom-0 z-10 w-24 bg-gradient-to-r from-surface to-transparent md:w-48" />
+          <div className="pointer-events-none absolute right-0 top-0 bottom-0 z-10 w-24 bg-gradient-to-l from-surface to-transparent md:w-48" />
+          
+          {/* Scrolling Content */}
+          <div className="flex w-full">
+            <motion.div 
+              className="flex items-center gap-16 pr-16 whitespace-nowrap"
+              animate={{ x: ["0%", "-50%"] }}
+              transition={{
+                ease: "linear",
+                duration: 25,
+                repeat: Infinity,
+              }}
+              style={{ display: "flex", width: "max-content" }}
+            >
+              {/* Duplicate the brand array multiple times to ensure seamless infinite flow */}
+              {[...brands, ...brands, ...brands, ...brands].map((brand, i) => (
+                <div 
+                  key={i} 
+                  className="inline-flex items-center justify-center opacity-40 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-300 px-4 shrink-0"
+                >
+                  {brand.logoUrl ? (
+                    <img 
+                      src={brand.logoUrl} 
+                      alt={brand.name} 
+                      className="h-10 md:h-12 w-auto object-contain transition-transform duration-300 hover:scale-110"
+                      referrerPolicy="no-referrer"
+                    />
+                  ) : (
+                    <div className="text-lg md:text-xl font-bold tracking-tight text-white/80 hover:text-white transition-colors duration-300">
+                      {brand.name}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </motion.div>
           </div>
         </div>
       </section>
@@ -234,8 +281,13 @@ export default function App() {
                   <Mail size={20} /> mail@sajid.asia
                 </a>
                 <div className="flex gap-4">
-                  {[ Facebook, Instagram].map((Icon, i) => (
-                    <a key={i} href="#" className="flex h-14 w-14 items-center justify-center rounded-full border border-surface/20 text-surface transition-all hover:bg-surface hover:text-white">
+                  {[ Facebook].map((Icon, i) => (
+                    <a key={i} href="https://www.facebook.com/SRJ.Sajid786" className="flex h-14 w-14 items-center justify-center rounded-full border border-surface/20 text-surface transition-all hover:bg-surface hover:text-white">
+                      <Icon size={24} />
+                    </a>
+                  ))}
+                  {[ Instagram].map((Icon, i) => (
+                    <a key={i} href="https://www.instagram.com/sajidul_islam_pathan" className="flex h-14 w-14 items-center justify-center rounded-full border border-surface/20 text-surface transition-all hover:bg-surface hover:text-white">
                       <Icon size={24} />
                     </a>
                   ))}
@@ -248,13 +300,9 @@ export default function App() {
 
       {/* Footer */}
       <footer className="border-t border-white/5 py-12">
-        <div className="container mx-auto flex flex-col items-center justify-between gap-6 px-6 md:flex-row">
+        <div className="container mx-auto flex flex-col items-center justify-center gap-6 px-6 text-center">
           <div className="text-sm text-white/40">
             © {new Date().getFullYear()} Sajidul Islam Pathan. All rights reserved.
-          </div>
-          <div className="flex gap-8 text-xs font-bold tracking-widest text-white/40 uppercase">
-            <a href="#" className="hover:text-brand">Privacy Policy</a>
-            <a href="#" className="hover:text-brand">Terms of Service</a>
           </div>
         </div>
       </footer>
